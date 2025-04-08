@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalka-Shimla Toy Train Experience</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3a5a78;
+            --secondary-color: #d4e3f5;
+            --accent-color: #4a6fa5;
+            --light-bg: #f8f9fa;
+            --dark-text: #1d3557;
+            --light-text: #6c757d;
+            --white: #ffffff;
+            --highlight: #5d8bf4;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --border-radius: 16px;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            line-height: 1.7;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Toy Train Section */
+        .toy-train-section {
+            background: linear-gradient(135deg, rgba(248, 249, 250, 0.9), rgba(212, 227, 245, 0.7));
+            padding: 80px 0;
+            margin: 60px 0;
+            position: relative;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .section-subtitle {
+            color: var(--light-text);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .unesco-badge {
+            position: absolute;
+            top: -15px;
+            right: 20%;
+            background: linear-gradient(135deg, #3a5a78, #4a6fa5);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(58, 90, 120, 0.3);
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .gallery img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .gallery img:hover {
+            transform: translateY(-5px);
+        }
+        
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .detail-card {
+            background: white;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .detail-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .detail-card ul {
+            list-style: none;
+        }
+        
+        .detail-card li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .detail-card li i {
+            color: var(--highlight);
+            margin-top: 3px;
+        }
+        
+        .pricing-table {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .price-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 2fr;
+            gap: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #eee;
+        }
+        
+        .price-row span:first-child {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .price-row span:nth-child(2) {
+            font-weight: 700;
+        }
+        
+        .schedule {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .train-card {
+            background: rgba(212, 227, 245, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .train-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .train-times {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 8px;
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+        
+        .photo-spots {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .spot {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+        
+        .spot i {
+            color: var(--highlight);
+            font-size: 1.2rem;
+            margin-top: 3px;
+        }
+        
+        .spot strong {
+            display: block;
+            color: var(--primary-color);
+        }
+        
+        .tips-card {
+            background: linear-gradient(135deg, rgba(93, 139, 244, 0.1), rgba(212, 227, 245, 0.3));
+            border: 1px solid var(--secondary-color);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 30px;
+            box-shadow: 0 4px 15px rgba(58, 90, 120, 0.4);
+            transition: var(--transition);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(58, 90, 120, 0.5);
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .price-row {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+            
+            .unesco-badge {
+                position: static;
+                display: inline-block;
+                margin-top: 15px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="toy-train-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Kalka-Shimla Toy Train</h2>
+                <div class="unesco-badge">
+                    <i class="fas fa-medal"></i> UNESCO World Heritage Site
+                </div>
+                <p class="section-subtitle">Experience one of India's most scenic rail journeys through the Himalayan foothills</p>
+            </div>
+            
+            <div class="gallery">
+                <img src="https://images.unsplash.com/photo-1582478192200-b4bd08b40029?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Toy Train crossing a bridge">
+                <img src="https://images.unsplash.com/photo-1582555172860-9a1420b552f6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Train interior with mountain views">
+                <img src="https://images.unsplash.com/photo-1582546132906-5a3c64aaf775?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Toy train in snowy landscape">
+            </div>
+            
+            <div class="details-grid">
+                <div class="detail-card">
+                    <h3><i class="fas fa-route"></i> Journey Highlights</h3>
+                    <ul>
+                        <li><i class="fas fa-mountain"></i> 96km scenic route through Himalayan foothills</li>
+                        <li><i class="fas fa-torii-gate"></i> Passes through 102 tunnels (longest is 1.1km)</li>
+                        <li><i class="fas fa-bridge"></i> Crosses 864 bridges (highest at 18.29m)</li>
+                        <li><i class="fas fa-tree"></i> Lush forests of pine, oak and rhododendron</li>
+                        <li><i class="fas fa-clock"></i> 5-6 hour journey time (avg speed 25km/h)</li>
+                    </ul>
+                </div>
+                
+                <div class="detail-card">
+                    <h3><i class="fas fa-ticket-alt"></i> Ticket Classes & Prices</h3>
+                    <div class="pricing-table">
+                        <div class="price-row">
+                            <span>Shivalik Deluxe</span>
+                            <span>₹600-800</span>
+                            <span>Chair car, limited stops, panoramic windows</span>
+                        </div>
+                        <div class="price-row">
+                            <span>First Class</span>
+                            <span>₹400-500</span>
+                            <span>Comfortable seating, large windows</span>
+                        </div>
+                        <div class="price-row">
+                            <span>Second Class</span>
+                            <span>₹200-300</span>
+                            <span>Basic seating, open windows</span>
+                        </div>
+                        <div class="price-row">
+                            <span>Rail Motor Car</span>
+                            <span>₹300-400</span>
+                            <span>Vintage experience, limited seats</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="detail-card">
+                    <h3><i class="fas fa-clock"></i> Recommended Trains</h3>
+                    <div class="schedule">
+                        <div class="train-card">
+                            <h4>Shivalik Deluxe Express</h4>
+                            <div class="train-times">
+                                <span>Kalka: 5:20 AM</span>
+                                <i class="fas fa-arrow-right"></i>
+                                <span>Shimla: 10:35 AM</span>
+                            </div>
+                            <p>Fastest service with few stops and comfortable seating</p>
+                        </div>
+                        <div class="train-card">
+                            <h4>Himalayan Queen</h4>
+                            <div class="train-times">
+                                <span>Kalka: 12:10 PM</span>
+                                <i class="fas fa-arrow-right"></i>
+                                <span>Shimla: 5:30 PM</span>
+                            </div>
+                            <p>Most scenic route with golden hour mountain views</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="detail-card">
+                    <h3><i class="fas fa-camera"></i> Best Photo Spots</h3>
+                    <div class="photo-spots">
+                        <div class="spot">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <strong>Barog Station</strong>
+                                <span>Charming colonial architecture</span>
+                            </div>
+                        </div>
+                        <div class="spot">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <strong>Tunnel 103</strong>
+                                <span>Signature spiral loop near Kathleeghat</span>
+                            </div>
+                        </div>
+                        <div class="spot">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <strong>Sonwara Bridge</strong>
+                                <span>Classic curved bridge shot</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="detail-card tips-card">
+                    <h3><i class="fas fa-lightbulb"></i> Travel Tips</h3>
+                    <ul>
+                        <li><i class="fas fa-calendar-check"></i> Book tickets 2-3 months in advance for Shivalik Deluxe</li>
+                        <li><i class="fas fa-chair"></i> Right side seats offer better views when traveling uphill</li>
+                        <li><i class="fas fa-utensils"></i> Carry snacks/water as food options are limited onboard</li>
+                        <li><i class="fas fa-snowflake"></i> Winter journeys (Dec-Feb) offer magical snowy landscapes</li>
+                        <li><i class="fas fa-map-marked-alt"></i> Combine with Shimla sightseeing by arriving before noon</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <a href="#" class="btn">
+                    <i class="fas fa-ticket-alt"></i> Book Your Toy Train Experience
+                </a>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

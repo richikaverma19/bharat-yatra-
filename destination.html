@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore India | Bharat Yatra</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Include jsPDF library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #3a86ff;
+            --secondary-color: #8338ec;
+            --accent-color: #ff006e;
+            --light-bg: #f8f9fa;
+            --dark-text: #212529;
+            --light-text: #6c757d;
+            --white: #ffffff;
+            --shadow: 0 4px 20px rgba(0,0,0,0.1);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Navigation */
+        .navbar {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 24px;
+        }
+        
+        .nav-logo i {
+            margin-right: 10px;
+            font-size: 28px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        .nav-link {
+            text-decoration: none;
+            color: var(--dark-text);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary-color);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            bottom: -5px;
+            left: 0;
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .nav-auth {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: 2px solid var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+        
+        /* Search Bar */
+        .search-container {
+            margin: 40px auto;
+            max-width: 800px;
+            position: relative;
+        }
+        
+        .search-bar {
+            width: 100%;
+            padding: 15px 25px;
+            border-radius: 50px;
+            border: none;
+            box-shadow: var(--shadow);
+            font-size: 16px;
+            padding-right: 60px;
+            transition: var(--transition);
+        }
+        
+        .search-bar:focus {
+            outline: none;
+            box-shadow: 0 6px 25px rgba(58, 134, 255, 0.2);
+        }
+        
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .search-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Search Results Dropdown */
+        .search-results {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: var(--white);
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            box-shadow: var(--shadow);
+            z-index: 10;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .search-result-item {
+            padding: 15px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .search-result-item:hover {
+            background-color: rgba(58, 134, 255, 0.1);
+        }
+        
+        .search-result-item h4 {
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .search-result-item p {
+            color: var(--light-text);
+            font-size: 14px;
+        }
+        
+        /* Favorites Dropdown */
+        .favorites-dropdown {
+            position: relative;
+        }
+        
+        .favorites-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: var(--white);
+            min-width: 300px;
+            max-height: 400px;
+            overflow-y: auto;
+            box-shadow: var(--shadow);
+            border-radius: var(--border-radius);
+            z-index: 100;
+            padding: 10px 0;
+        }
+        
+        .favorites-dropdown:hover .favorites-menu {
+            display: block;
+        }
+        
+        .favorite-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            gap: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .favorite-item:hover {
+            background-color: rgba(58, 134, 255, 0.1);
+        }
+        
+        .favorite-item img {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            object-fit: cover;
+        }
+        
+        .favorite-item-info h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: var(--dark-text);
+        }
+        
+        .favorite-item-info p {
+            font-size: 14px;
+            color: var(--light-text);
+        }
+        
+        .no-favorites {
+            padding: 20px;
+            text-align: center;
+            color: var(--light-text);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('https://images.unsplash.com/photo-1524492412937-b33874b7bdd6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(transparent, var(--light-bg));
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 1s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        /* Destination Cards */
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        .destinations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+        
+        .destination-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .destination-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .favorite-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 2;
+            transition: var(--transition);
+        }
+        
+        .favorite-btn:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: scale(1.1);
+        }
+        
+        .favorite-btn i {
+            color: var(--light-text);
+            font-size: 18px;
+            transition: var(--transition);
+        }
+        
+        .favorite-btn.active i {
+            color: var(--accent-color);
+        }
+        
+        .destination-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .destination-card:hover .destination-image {
+            transform: scale(1.05);
+        }
+        
+        .destination-content {
+            padding: 20px;
+            position: relative;
+        }
+        
+        .destination-content h2 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .destination-content p {
+            color: var(--light-text);
+            margin-bottom: 15px;
+        }
+        
+        .destination-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #ffb400;
+        }
+        
+        .explore-btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 8px 15px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+        
+        .explore-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        
+        /* Trip Reminder Modal */
+        .reminder-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .reminder-content {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--light-text);
+            transition: var(--transition);
+        }
+        
+        .close-modal:hover {
+            color: var(--primary-color);
+        }
+        
+        .reminder-form h3 {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: var(--transition);
+        }
+        
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.2);
+        }
+        
+        .reminder-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        /* Download Button */
+        .download-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .download-btn:hover {
+            background-color: #d9005b;
+            transform: translateY(-2px);
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            padding: 60px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            margin: 50px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+        
+        .cta-section::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: -80px;
+            width: 300px;
+            height: 300px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+        
+        .cta-section h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .cta-section p {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-text);
+            color: var(--white);
+            padding: 50px 0 20px;
+            position: relative;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 18px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background: var(--primary-color);
+            bottom: 0;
+            left: 0;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+        }
+        
+        .footer-column a:hover {
+            color: var(--white);
+            transform: translateX(5px);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            color: var(--white);
+            font-size: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .social-icons a:hover {
+            background: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #495057;
+            color: #adb5bd;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .nav-links {
+                gap: 15px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .hero {
+                height: 400px;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .destination-card {
+                max-width: 100%;
+            }
+            
+            .reminder-content {
+                width: 95%;
+                padding: 20px;
+            }
+            
+            .search-results {
+                position: static;
+                margin-top: 10px;
+                border-radius: var(--border-radius);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="/" class="nav-logo">
+                <i class="fas fa-plane"></i>
+                <span>Bharat Yatra</span>
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="destination.html" class="nav-link active">Destinations</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <div class="nav-auth">
+                <div class="favorites-dropdown">
+                    <a href="#" id="favorites-btn" class="btn btn-outline">
+                        <i class="fas fa-heart"></i> Favorites
+                    </a>
+                    <div class="favorites-menu" id="favorites-menu">
+                        <div class="no-favorites">No favorites saved yet</div>
+                        <!-- Favorite items will be added here by JavaScript -->
+                    </div>
+                </div>
+                <a href="login.html" class="btn btn-outline">Login</a>
+            </div>
+        </div>
+    </nav>
+    
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Discover Incredible India</h1>
+            <p>Explore diverse landscapes, rich heritage, and vibrant cultures across India's most beautiful destinations</p>
+        </div>
+    </section>
+    
+    <div class="container">
+        <!-- Search Bar -->
+        <div class="search-container">
+            <input type="text" class="search-bar" id="searchInput" placeholder="Search for destinations, packages, or experiences...">
+            <button class="search-btn" id="searchBtn"><i class="fas fa-search"></i></button>
+            <div class="search-results" id="searchResults"></div>
+        </div>
+        
+        <h2 class="section-title">Popular Destinations</h2>
+        
+        <div class="destinations-grid" id="destinationsGrid">
+            <!-- Destination cards will be populated by JavaScript -->
+        </div>
+        
+        <section class="cta-section">
+            <h2>Ready for Your Indian Adventure?</h2>
+            <p>Let us help you plan the perfect trip with customized itineraries, local insights, and exclusive deals.</p>
+            <div class="cta-buttons">
+                <a href="contact.html" class="btn btn-outline">Contact Our Experts</a>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Trip Reminder Modal -->
+    <div class="reminder-modal" id="reminderModal">
+        <div class="reminder-content">
+            <span class="close-modal" onclick="closeReminderModal()">&times;</span>
+            <div class="reminder-form">
+                <h3>Set Trip Reminder</h3>
+                <p id="reminderDestination">You're planning a trip to <span id="destinationName"></span></p>
+                <div class="form-group">
+                    <label for="tripDate">Trip Date</label>
+                    <input type="date" id="tripDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="reminderEmail">Email Address</label>
+                    <input type="email" id="reminderEmail" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="reminderNote">Notes (Optional)</label>
+                    <input type="text" id="reminderNote" placeholder="Any special plans or preferences?">
+                </div>
+                <div class="reminder-actions">
+                    <button class="btn btn-outline" onclick="closeReminderModal()">Cancel</button>
+                    <button class="btn btn-primary" onclick="setReminder()">Set Reminder</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Bharat Yatra</h3>
+                    <p>Making travel planning easy and memorable since 2010. We help you discover India's hidden gems.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Destinations</h3>
+                    <ul>
+                        <li><a href="jaipur.html">Jaipur</a></li>
+                        <li><a href="goa.html">Goa</a></li>
+                        <li><a href="kerala.html">Kerala</a></li>
+                        <li><a href="varanasi.html">Varanasi</a></li>
+                        <li><a href="shimla.html">Shimla</a></li>
+                        <li><a href="mumbai.html">Mumbai</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Special Tours</h3>
+                    <ul>
+                        <li><a href="4dham-yatra.html">4 Dham Yatra</a></li>
+                        <li><a href="golden-triangle.html">Golden Triangle</a></li>
+                        <li><a href="wildlife-safari.html">Wildlife Safari</a></li>
+                        <li><a href="culturaltour.html">Cultural Tours</a></li>
+                        <li><a href="adventuretour.html">Adventure Tours</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="faq.html">FAQs</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Bharat Yatra. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize jsPDF
+        const { jsPDF } = window.jspdf;
+        
+        // Destination data
+        const destinations = [
+            {
+                id: "jaipur",
+                name: "Jaipur, Rajasthan",
+                description: "The Pink City known for its magnificent palaces, historic forts, and vibrant bazaars.",
+                image: "https://images.unsplash.com/photo-1582972236019-ea9a78a96d51?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80",
+                link: "jaipur.html",
+                rating: 4.7
+            },
+            {
+                id: "goa",
+                name: "Goa",
+                description: "India's beach paradise with golden sands, Portuguese heritage, and vibrant nightlife.",
+                image: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80",
+                link: "goa.html",
+                rating: 4.9
+            },
+            {
+                id: "kerala",
+                name: "Kerala",
+                description: "God's Own Country - backwaters, lush greenery, and Ayurvedic treatments.",
+                image: "https://images.unsplash.com/photo-1580109880891-65c8a9b1c8a6?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80",
+                link: "kerala.html",
+                rating: 4.8
+            },
+            {
+                id: "varanasi",
+                name: "Varanasi",
+                description: "The spiritual capital of India with ghats along the Ganges and ancient temples.",
+                image: "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80",
+                link: "varanasi.html",
+                rating: 4.5
+            },
+            {
+                id: "shimla",
+                name: "Shimla",
+                description: "Queen of Hills with colonial architecture and panoramic Himalayan views.",
+                image: "https://images.unsplash.com/photo-1587474260584-136574528ed5?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80",
+                link: "shimla.html",
+                rating: 4.6
+            },
+            {
+                id: "mumbai",
+                name: "Mumbai",
+                description: "The City of Dreams - Bollywood, Gateway of India, and diverse culinary experiences.",
+                image: "https://images.unsplash.com/photo-1581852017103-68e8115e1e47?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80",
+                link: "mumbai.html",
+                rating: 5.0
+            },
+            {
+                id: "4dham",
+                name: "4 Dham Yatra",
+                description: "The sacred pilgrimage circuit covering Yamunotri, Gangotri, Kedarnath and Badrinath.",
+                image: "https://images.unsplash.com/photo-1587474260584-136574528ed5?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80",
+                link: "4dham-yatra.html",
+                rating: 4.9
+            },
+            {
+                id: "golden-triangle",
+                name: "Golden Triangle",
+                description: "Classic route covering Delhi, Agra and Jaipur - India's most popular tourist circuit.",
+                image: "https://images.unsplash.com/photo-1587474260584-136574528ed5?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80",
+                link: "golden-triangle.html",
+                rating: 4.8
+            },
+            {
+                id: "wildlife",
+                name: "Wildlife Safari",
+                description: "Experience India's rich biodiversity with tiger safaris and jungle lodges.",
+                image: "https://images.unsplash.com/photo-1587474260584-136574528ed5?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80",
+                link: "wildlife-safari.html",
+                rating: 4.7
+            }
+        ];
+
+        // Favorites functionality
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        
+        // Function to update favorites display
+        function updateFavoritesDisplay() {
+            const favoritesMenu = document.getElementById('favorites-menu');
+            
+            if (favorites.length === 0) {
+                favoritesMenu.innerHTML = '<div class="no-favorites">No favorites saved yet</div>';
+                return;
+            }
+            
+            favoritesMenu.innerHTML = '';
+            
+            favorites.forEach(destId => {
+                const destination = destinations.find(d => d.id === destId);
+                if (destination) {
+                    const favoriteItem = document.createElement('div');
+                    favoriteItem.className = 'favorite-item';
+                    favoriteItem.innerHTML = `
+                        <img src="${destination.image}" alt="${destination.name}">
+                        <div class="favorite-item-info">
+                            <h4>${destination.name}</h4>
+                            <p>${destination.description.substring(0, 50)}...</p>
+                        </div>
+                    `;
+                    favoriteItem.addEventListener('click', () => {
+                        window.location.href = destination.link;
+                    });
+                    favoritesMenu.appendChild(favoriteItem);
+                }
+            });
+        }
+
+        // Toggle favorite
+        function toggleFavorite(destinationId) {
+            const index = favorites.indexOf(destinationId);
+            if (index === -1) {
+                favorites.push(destinationId);
+            } else {
+                favorites.splice(index, 1);
+            }
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            updateFavoritesDisplay();
+            renderDestinationCards();
+        }
+
+        // Check if a destination is favorited
+        function isFavorited(destinationId) {
+            return favorites.includes(destinationId);
+        }
+
+        // Render destination cards
+        function renderDestinationCards() {
+            const grid = document.getElementById('destinationsGrid');
+            grid.innerHTML = '';
+            
+            destinations.forEach(destination => {
+                const card = document.createElement('div');
+                card.className = 'destination-card';
+                card.innerHTML = `
+                    <button class="favorite-btn ${isFavorited(destination.id) ? 'active' : ''}" 
+                            onclick="toggleFavorite('${destination.id}')">
+                        <i class="fas fa-heart"></i>
+                    </button>
+                    <img src="${destination.image}" alt="${destination.name}" class="destination-image">
+                    <div class="destination-content">
+                        <h2>${destination.name}</h2>
+                        <p>${destination.description}</p>
+                        <div class="destination-meta">
+                            <div class="rating">
+                                <i class="fas fa-star"></i> ${destination.rating}
+                            </div>
+                            <div>
+                                <button class="download-btn" onclick="downloadItinerary('${destination.name}')">
+                                    <i class="fas fa-download"></i> Itinerary
+                                </button>
+                                <a href="${destination.link}" class="explore-btn">
+                                    <i class="fas fa-search"></i> Explore
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Make entire card clickable except for buttons
+                card.addEventListener('click', (e) => {
+                    if (!e.target.closest('button') && !e.target.closest('a')) {
+                        window.location.href = destination.link;
+                    }
+                });
+                
+                grid.appendChild(card);
+            });
+        }
+
+        // Search functionality
+        function performSearch(query) {
+            const results = destinations.filter(dest => 
+                dest.name.toLowerCase().includes(query.toLowerCase()) || 
+                dest.description.toLowerCase().includes(query.toLowerCase())
+            );
+            
+            displaySearchResults(results);
+        }
+
+        // Display search results
+        function displaySearchResults(results) {
+            const searchResults = document.getElementById('searchResults');
+            
+            if (results.length === 0) {
+                searchResults.innerHTML = '<div class="search-result-item">No destinations found matching your search.</div>';
+                searchResults.style.display = 'block';
+                return;
+            }
+            
+            searchResults.innerHTML = '';
+            
+            results.forEach(destination => {
+                const resultItem = document.createElement('div');
+                resultItem.className = 'search-result-item';
+                resultItem.innerHTML = `
+                    <h4>${destination.name}</h4>
+                    <p>${destination.description}</p>
+                `;
+                resultItem.addEventListener('click', () => {
+                    window.location.href = destination.link;
+                });
+                searchResults.appendChild(resultItem);
+            });
+            
+            searchResults.style.display = 'block';
+        }
+
+        // Hide search results when clicking outside
+        document.addEventListener('click', (e) => {
+            const searchResults = document.getElementById('searchResults');
+            if (!e.target.closest('.search-container') && searchResults.style.display === 'block') {
+                searchResults.style.display = 'none';
+            }
+        });
+
+        // Trip Reminder Modal Functions
+        let currentDestination = '';
+        
+        function openReminderModal(destination) {
+            currentDestination = destination;
+            document.getElementById('destinationName').textContent = destination;
+            document.getElementById('reminderModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeReminderModal() {
+            document.getElementById('reminderModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        function setReminder() {
+            const tripDate = document.getElementById('tripDate').value;
+            const email = document.getElementById('reminderEmail').value;
+            const note = document.getElementById('reminderNote').value;
+            
+            if (!tripDate || !email) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            alert(`Reminder set for ${currentDestination} on ${tripDate}. A confirmation has been sent to ${email}`);
+            closeReminderModal();
+            
+            // Reset form
+            document.getElementById('tripDate').value = '';
+            document.getElementById('reminderEmail').value = '';
+            document.getElementById('reminderNote').value = '';
+        }
+        
+        // Download Itinerary as PDF
+        function downloadItinerary(destination) {
+            const doc = new jsPDF();
+            
+            // Add title
+            doc.setFontSize(22);
+            doc.setTextColor(58, 134, 255);
+            doc.text(`${destination} Travel Itinerary`, 105, 20, { align: 'center' });
+            
+            // Sample itinerary data
+            const itineraryData = {
+                'Jaipur, Rajasthan': [
+                    { day: 'Day 1', activities: ['Arrival in Jaipur', 'Visit Hawa Mahal', 'Explore City Palace', 'Jantar Mantar'] },
+                    { day: 'Day 2', activities: ['Amber Fort visit', 'Jaigarh Fort', 'Nahargarh Fort sunset'] },
+                    { day: 'Day 3', activities: ['Albert Hall Museum', 'Shopping in Bapu Bazaar', 'Departure'] }
+                ],
+                'Goa': [
+                    { day: 'Day 1', activities: ['Arrival in Goa', 'Relax at Calangute Beach', 'Explore Anjuna Flea Market'] },
+                    { day: 'Day 2', activities: ['Dudhsagar Waterfalls trip', 'Spice Plantation visit'] },
+                    { day: 'Day 3', activities: ['Old Goa churches', 'Panjim city tour', 'Sunset cruise'] }
+                ],
+                // Add data for other destinations...
+            };
+            
+            // Default itinerary if specific one not found
+            const itinerary = itineraryData[destination] || [
+                { day: 'Day 1', activities: ['Arrival', 'Sightseeing', 'Local cuisine experience'] },
+                { day: 'Day 2', activities: ['Main attractions visit', 'Cultural activities'] },
+                { day: 'Day 3', activities: ['Relaxation', 'Shopping', 'Departure'] }
+            ];
+            
+            // Add itinerary table
+            const columns = ['Day', 'Activities'];
+            const rows = itinerary.map(day => [
+                day.day,
+                day.activities.join('\n')
+            ]);
+            
+            doc.autoTable({
+                head: [columns],
+                body: rows,
+                startY: 40,
+                styles: {
+                    cellPadding: 5,
+                    fontSize: 10,
+                    valign: 'middle',
+                    overflow: 'linebreak'
+                },
+                columnStyles: {
+                    0: { cellWidth: 20 },
+                    1: { cellWidth: 'auto' }
+                }
+            });
+            
+            // Add transportation info
+            doc.setFontSize(14);
+            doc.setTextColor(58, 134, 255);
+            doc.text('Transportation Options:', 14, doc.autoTable.previous.finalY + 20);
+            
+            doc.setFontSize(10);
+            doc.setTextColor(0, 0, 0);
+            doc.text('• By Air: Nearest airport information', 20, doc.autoTable.previous.finalY + 30);
+            doc.text('• By Train: Nearest railway station', 20, doc.autoTable.previous.finalY + 40);
+            doc.text('• By Road: Highway connectivity details', 20, doc.autoTable.previous.finalY + 50);
+            
+            // Save the PDF
+            doc.save(`${destination}_Itinerary.pdf`);
+        }
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Highlight active nav link
+            const currentPage = location.pathname.split('/').pop();
+            document.querySelectorAll('.nav-link').forEach(link => {
+                if(link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Render destination cards
+            renderDestinationCards();
+            updateFavoritesDisplay();
+            
+            // Set up search functionality
+            const searchInput = document.getElementById('searchInput');
+            const searchBtn = document.getElementById('searchBtn');
+            
+            searchBtn.addEventListener('click', () => {
+                performSearch(searchInput.value);
+            });
+            
+            searchInput.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    performSearch(searchInput.value);
+                } else if (searchInput.value.length > 0) {
+                    performSearch(searchInput.value);
+                } else {
+                    document.getElementById('searchResults').style.display = 'none';
+                }
+            });
+            
+            // Close modal if clicked outside
+            window.onclick = function(event) {
+                const modal = document.getElementById('reminderModal');
+                if (event.target == modal) {
+                    closeReminderModal();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

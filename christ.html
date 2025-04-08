@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Christ Church | Shimla - Bharat Yatra</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3a5a78;
+            --secondary-color: #d4e3f5;
+            --accent-color: #4a6fa5;
+            --light-bg: #f8f9fa;
+            --dark-text: #1d3557;
+            --light-text: #6c757d;
+            --white: #ffffff;
+            --highlight: #5d8bf4;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --border-radius: 16px;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Navigation */
+        .navbar {
+            background-color: rgba(255,255,255,0.95);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+        
+        .navbar.scrolled {
+            padding: 10px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 24px;
+            transition: var(--transition);
+        }
+        
+        .nav-logo i {
+            margin-right: 10px;
+            font-size: 28px;
+            color: var(--accent-color);
+        }
+        
+        .nav-logo span {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        .nav-link {
+            text-decoration: none;
+            color: var(--dark-text);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary-color);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            bottom: 0;
+            left: 0;
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .nav-auth {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 10px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: var(--white);
+            box-shadow: 0 4px 15px rgba(58, 90, 120, 0.4);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(58, 90, 120, 0.5);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: var(--white);
+            transform: translateY(-3px);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(29, 53, 87, 0.7), rgba(29, 53, 87, 0.8)), 
+                        url('https://images.unsplash.com/photo-1632495288245-81aa1a1aa888?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 70vh;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 80px;
+            animation: fadeIn 1.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: -10%;
+            width: 120%;
+            height: 200px;
+            background: var(--light-bg);
+            transform: rotate(-3deg);
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+            animation: slideUp 1s ease;
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            line-height: 1.2;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            font-weight: 300;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        /* Main Content */
+        .attraction-overview {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-bottom: 60px;
+            position: relative;
+            overflow: hidden;
+            z-index: 2;
+            transform: translateY(-50px);
+        }
+        
+        .attraction-overview h2 {
+            color: var(--primary-color);
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .attraction-overview h2 i {
+            color: var(--highlight);
+            font-size: 1.8rem;
+        }
+        
+        .attraction-overview p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            color: var(--dark-text);
+            line-height: 1.8;
+        }
+        
+        .highlight-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .stat {
+            background: rgba(212, 227, 245, 0.5);
+            padding: 15px 25px;
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            color: var(--accent-color);
+            border: 1px solid var(--secondary-color);
+        }
+        
+        .stat i {
+            font-size: 1.2rem;
+            color: var(--highlight);
+        }
+        
+        /* Details Section */
+        .details-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .details-content h3 {
+            color: var(--accent-color);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        
+        .details-content p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+        
+        .details-features {
+            list-style: none;
+        }
+        
+        .details-features li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .details-features i {
+            color: var(--highlight);
+            margin-top: 3px;
+        }
+        
+        .details-image {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            height: 100%;
+        }
+        
+        .details-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .details-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* Visiting Info */
+        .visiting-info {
+            background: linear-gradient(135deg, rgba(248, 249, 250, 0.8), rgba(93, 139, 244, 0.1));
+            padding: 40px;
+            border-radius: var(--border-radius);
+            margin-bottom: 60px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .info-card {
+            background: var(--white);
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .info-card h4 {
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-card h4 i {
+            color: var(--primary-color);
+        }
+        
+        .info-card p {
+            color: var(--dark-text);
+        }
+        
+        /* Nearby Attractions */
+        .nearby-section {
+            margin-bottom: 60px;
+        }
+        
+        .nearby-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .nearby-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .nearby-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .nearby-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .nearby-content {
+            padding: 20px;
+        }
+        
+        .nearby-content h3 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+        
+        .nearby-content p {
+            color: var(--light-text);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .nearby-distance {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+        
+        /* Gallery Section */
+        .gallery-section {
+            margin-bottom: 80px;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            height: 250px;
+            transition: var(--transition);
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.03);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: var(--white);
+            padding: 15px;
+            font-size: 1rem;
+            opacity: 0;
+            transition: var(--transition);
+        }
+        
+        .gallery-item:hover .gallery-caption {
+            opacity: 1;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: var(--white);
+            padding: 80px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            margin-bottom: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+        
+        .cta-section::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: -80px;
+            width: 300px;
+            height: 300px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .cta-section p {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            position: relative;
+            z-index: 2;
+            font-size: 1.1rem;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-text);
+            color: var(--white);
+            padding: 80px 0 30px;
+            position: relative;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background: var(--primary-color);
+            bottom: 0;
+            left: 0;
+        }
+        
+        .footer-column p {
+            margin-bottom: 20px;
+            color: #adb5bd;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-column a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+        }
+        
+        .footer-column a:hover {
+            color: var(--white);
+            transform: translateX(5px);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            color: var(--white);
+            font-size: 1.2rem;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .social-icons a:hover {
+            background: var(--primary-color);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #adb5bd;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .details-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .details-image {
+                height: 400px;
+                order: -1;
+            }
+            
+            .cta-section {
+                padding: 60px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 10px 0;
+            }
+            
+            .hero {
+                height: 60vh;
+                min-height: 400px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .attraction-overview {
+                padding: 30px;
+                transform: translateY(0);
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .cta-section {
+                padding: 40px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .cta-section h2 {
+                font-size: 1.8rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="/" class="nav-logo">
+                <i class="fas fa-archway"></i>
+                <span>Bharat Yatra</span>
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="/index.html" class="nav-link">Home</a></li>
+                <li><a href="/destinations.html" class="nav-link">Destinations</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <div class="nav-auth">
+                <a href="/login.html" class="btn btn-outline">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Christ Church</h1>
+            <p class="subtitle">Shimla's Iconic Neo-Gothic Landmark</p>
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="attraction-overview">
+            <h2><i class="fas fa-church"></i> About Christ Church</h2>
+            <p>Christ Church, the second oldest church in North India, is Shimla's most prominent landmark and a magnificent example of neo-Gothic architecture. Built between 1844 and 1857, this stunning church stands proudly on The Ridge, dominating Shimla's skyline with its distinctive yellow facade and tall spires. The church's exquisite stained glass windows, pipe organ, and beautiful frescoes make it a must-visit for architecture enthusiasts and spiritual seekers alike.</p>
+            <p>As one of the enduring legacies of British rule in Shimla, Christ Church continues to hold regular services while also serving as a major tourist attraction. Its serene ambiance, historical significance, and architectural grandeur offer visitors a glimpse into Shimla's colonial past.</p>
+            
+            <div class="highlight-stats">
+                <div class="stat">
+                    <i class="fas fa-star"></i>
+                    <span>4.7/5 (1,850 reviews)</span>
+                </div>
+                <div class="stat">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Built: 1857</span>
+                </div>
+                <div class="stat">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Location: The Ridge, Shimla</span>
+                </div>
+                <div class="stat">
+                    <i class="fas fa-clock"></i>
+                    <span>Visiting Time: 8AM-6PM</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Details Section -->
+        <div class="details-section">
+            <div class="details-content">
+                <h3>Architectural Marvel</h3>
+                <p>Christ Church showcases exquisite neo-Gothic architecture with its tall spires, pointed arches, and intricate stonework. The church's design was inspired by English medieval churches and adapted to Himalayan conditions.</p>
+                
+                <h4>Key Features:</h4>
+                <ul class="details-features">
+                    <li><i class="fas fa-check"></i> <strong>Stained Glass Windows:</strong> Beautiful windows depicting faith, hope, charity, fortitude, patience, and humility</li>
+                    <li><i class="fas fa-check"></i> <strong>Clock Tower:</strong> Added in 1860, visible from across Shimla</li>
+                    <li><i class="fas fa-check"></i> <strong>Frescoes:</strong> Rare fresco work around the baptismal font</li>
+                    <li><i class="fas fa-check"></i> <strong>Pipe Organ:</strong> Installed in 1913, still functional</li>
+                    <li><i class="fas fa-check"></i> <strong>Brass Memorials:</strong> Commemorating British officers and their families</li>
+                </ul>
+                
+                <p>The church's interior features beautiful wooden pews, a vaulted ceiling, and an impressive brass lectern in the shape of an eagle. The tranquil atmosphere inside provides a welcome respite from Shimla's bustling Mall Road.</p>
+            </div>
+            
+            <div class="details-image">
+                <img src="https://images.unsplash.com/photo-1632495288245-81aa1a1aa888?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Christ Church Interior">
+            </div>
+        </div>
+        
+        <!-- Visiting Info -->
+        <div class="visiting-info">
+            <h2><i class="fas fa-info-circle"></i> Visiting Information</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4><i class="fas fa-door-open"></i> Opening Hours</h4>
+                    <p>Monday to Saturday: 8:00 AM to 6:00 PM<br>
+                    Sunday Services: 8:00 AM and 11:00 AM<br>
+                    *Tourist visits restricted during services</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4><i class="fas fa-rupee-sign"></i> Entry Fee</h4>
+                    <p>No entry fee (Donations welcome)<br>
+                    Photography allowed (No flash)<br>
+                    Guided tours available for ₹200-500</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4><i class="fas fa-bell"></i> Best Time to Visit</h4>
+                    <p>Morning hours for peaceful experience<br>
+                    Evenings for beautiful lighting<br>
+                    Avoid Sundays if you want to explore interior</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4><i class="fas fa-lightbulb"></i> Tips</h4>
+                    <p>Dress modestly (shoulders/knees covered)<br>
+                    Maintain silence inside the church<br>
+                    Combine visit with Ridge exploration<br>
+                    Visit nearby St. Michael's Cathedral</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- History Section -->
+        <div class="details-section">
+            <div class="details-image">
+                <img src="https://images.unsplash.com/photo-1632495288245-81aa1a1aa888?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Christ Church History">
+            </div>
+            
+            <div class="details-content">
+                <h3>Historical Significance</h3>
+                <p>Christ Church stands as a testament to Shimla's colonial past. The foundation stone was laid in 1844, and the church was consecrated in 1857, the same year as the Indian Rebellion. It served as the spiritual center for British officials during Shimla's time as the summer capital of British India.</p>
+                
+                <h4>Historical Highlights:</h4>
+                <ul class="details-features">
+                    <li><i class="fas fa-history"></i> <strong>Design:</strong> By Colonel J.T. Boileau in neo-Gothic style</li>
+                    <li><i class="fas fa-history"></i> <strong>Construction:</strong> Used local grey stone with yellow sandstone dressing</li>
+                    <li><i class="fas fa-history"></i> <strong>Clock Tower:</strong> Added later in 1860, funded by the Raja of Koti</li>
+                    <li><i class="fas fa-history"></i> <strong>Restoration:</strong> Major restoration work completed in 2015</li>
+                    <li><i class="fas fa-history"></i> <strong>Cultural Icon:</strong> Featured in numerous films and literature</li>
+                </ul>
+                
+                <p>During British rule, attending Sunday service at Christ Church was considered a social obligation for colonial officials. Today, it remains an active place of worship while welcoming visitors from around the world.</p>
+            </div>
+        </div>
+        
+        <!-- Nearby Attractions -->
+        <div class="nearby-section">
+            <h2><i class="fas fa-map-marked-alt"></i> Nearby Attractions</h2>
+            <p>Combine your visit to Christ Church with these nearby attractions on The Ridge:</p>
+            
+            <div class="nearby-grid">
+                <div class="nearby-card">
+                    <img src="https://images.unsplash.com/photo-1580655650449-894a6c3254e1?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="The Ridge" class="nearby-image">
+                    <div class="nearby-content">
+                        <h3>The Ridge</h3>
+                        <p>Shimla's large open space offering panoramic views of the mountains, hosting cultural events and festivals throughout the year.</p>
+                        <div class="nearby-distance">
+                            <i class="fas fa-walking"></i> 1 minute walk
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="nearby-card">
+                    <img src="https://images.unsplash.com/photo-1580655650449-894a6c3254e1?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Scandal Point" class="nearby-image">
+                    <div class="nearby-content">
+                        <h3>Scandal Point</h3>
+                        <p>Famous meeting point with interesting legends, offering great views and the starting point of Mall Road.</p>
+                        <div class="nearby-distance">
+                            <i class="fas fa-walking"></i> 3 minute walk
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="nearby-card">
+                    <img src="https://images.unsplash.com/photo-1580655650449-894a6c3254e1?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Gaiety Theatre" class="nearby-image">
+                    <div class="nearby-content">
+                        <h3>Gaiety Theatre</h3>
+                        <p>Historic Victorian-era theater hosting cultural performances, with a small museum showcasing Shimla's history.</p>
+                        <div class="nearby-distance">
+                            <i class="fas fa-walking"></i> 5 minute walk
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Gallery Section -->
+        <div class="gallery-section">
+            <h2><i class="fas fa-images"></i> Christ Church Gallery</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1632495288245-81aa1a1aa888?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Christ Church Facade">
+                    <div class="gallery-caption">The iconic yellow facade of Christ Church</div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1632495288245-81aa1a1aa888?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Stained Glass">
+                    <div class="gallery-caption">Beautiful stained glass windows inside</div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1632495288245-81aa1a1aa888?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Night View">
+                    <div class="gallery-caption">Christ Church illuminated at night</div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1632495288245-81aa1a1aa888?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Pipe Organ">
+                    <div class="gallery-caption">The historic pipe organ</div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1632495288245-81aa1a1aa888?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Winter View">
+                    <div class="gallery-caption">Snow-covered Christ Church in winter</div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1632495288245-81aa1a1aa888?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Clock Tower">
+                    <div class="gallery-caption">The distinctive clock tower</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- CTA Section -->
+        <div class="cta-section">
+            <h2>Plan Your Visit to Christ Church</h2>
+            <p>Include this architectural gem in your Shimla itinerary with our customized tour packages that combine history, culture, and scenic beauty.</p>
+            <div class="cta-buttons">
+                <a href="/contact.html" class="btn btn-primary">Book a Guided Tour</a>
+                
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Bharat Yatra</h3>
+                    <p>Making travel planning easy and memorable since 2010. We help you discover India's hidden gems with authentic experiences.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Shimla Attractions</h3>
+                    <ul>
+                        <li><a href="mallroad.html">The Mall Road</a></li>
+                        <li><a href="viceregal.html">Viceregal Lodge</a></li>
+                        <li><a href="kalka.html">Kalka-Shimla Toy Train</a></li>
+                        <li><a href="jakhoo.html">Jakhoo Temple</a></li>
+                        <li><a href="christ.html">Christ Church</a></li>
+                        <li><a href="kufri.html">Kufri</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Travel Resources</h3>
+                    <ul>
+                        <li><a href="#">Best Time to Visit</a></li>
+                        <li><a href="#">Transportation Guide</a></li>
+                        <li><a href="#">Cultural Etiquette</a></li>
+                        <li><a href="#">Packing Checklist</a></li>
+                        <li><a href="#">Festival Calendar</a></li>
+                        <li><a href="#">Travel Insurance</a></li>
+                    </ul>
+                </div>
+                
+                           
+            <div class="copyright">
+                <p>&copy; 2023 Bharat Yatra. All rights reserved. | Designed with <i class="fas fa-heart" style="color: var(--primary-color);"></i> in India</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Animation on scroll
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.details-section, .info-card, .nearby-card, .gallery-item');
+            
+            elements.forEach((element, index) => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                
+                if (elementPosition < screenPosition) {
+                    element.style.animation = `fadeInUp 0.5s ease forwards ${index * 0.1}s`;
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', animateOnScroll);
+        animateOnScroll(); // Run once on load
+    </script>
+</body>
+</html>
